@@ -1,0 +1,15 @@
+server:
+  build: docker
+  ports:
+    - "4848:4848"
+    - "8080:8080"
+  volumes_from:
+    - app
+  environment:
+    NOTEJAM_SECRET: "EEi?&zzBCheMUgF5Idaj<hlMv^a>VL30pEjg2T&z92V5K1niB%(hkcp7)1_4rXLP"
+  command: asadmin start-domain -v
+app:
+  image: glassfish/nightly
+  volumes:
+    - ./notejam/target/notejam-ozark.war:/glassfish4/glassfish/domains/domain1/autodeploy/notejam-ozark.war
+  command: /bin/bash
