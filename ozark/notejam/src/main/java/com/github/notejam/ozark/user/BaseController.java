@@ -5,7 +5,7 @@ import com.google.common.collect.Iterables;
 
 import javax.inject.Inject;
 import javax.mvc.Models;
-import javax.mvc.validation.ValidationResult;
+import javax.mvc.binding.BindingResult;
 import javax.ws.rs.core.Response;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
@@ -23,7 +23,7 @@ public abstract class BaseController {
 	protected Messages messages;
 
 	@Inject
-	protected ValidationResult validationResult;
+	protected BindingResult bindingResult;
 
 	protected Response response(Response.Status status, String view) {
 		return Response.status(status).entity(String.format("%s.jsp", view)).build();
@@ -42,13 +42,13 @@ public abstract class BaseController {
 	}
 
 	protected boolean validationFailed() {
-		if (validationResult.isFailed()) {
-			validationResult.getAllViolations().forEach(v -> {
+		if (bindingResult.isFailed()) {
+			bindingResult.getAllViolations().forEach(v -> {
 				String key = Iterables.getLast(v.getPropertyPath()).getName();
 				messages.error(key, v.getMessage());
 			});
 		}
-		return validationResult.isFailed();
+		return bindingResult.isFailed();
 	}
 
 }

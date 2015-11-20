@@ -10,17 +10,23 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
+  <properties>
+    <version.mvc>1.0-edr2</version.mvc>
+    <version.ozark>1.0.0-m02</version.ozark>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <dependencies>
     <!-- The MVC API + RI -->
     <dependency>
       <groupId>javax.mvc</groupId>
       <artifactId>javax.mvc-api</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${version.mvc}</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.ozark</groupId>
       <artifactId>ozark</artifactId>
-      <version>1.0.0-m02-SNAPSHOT</version>
+      <version>${version.ozark}</version>
     </dependency>
     <!-- JEE API -->
     <dependency>
@@ -65,9 +71,5 @@
       </plugin>
     </plugins>
   </build>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
 </project>
