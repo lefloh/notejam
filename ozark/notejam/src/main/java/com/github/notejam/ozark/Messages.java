@@ -1,7 +1,8 @@
 package com.github.notejam.ozark;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.mvc.annotation.RedirectScoped;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,16 +11,22 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A @RedirectScoped CDI bean holding messages like validation errors.
  * @author Florian Hirsch
  */
-@RequestScoped
 @Named("msg")
-public class Messages {
+@RedirectScoped
+public class Messages implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private List<Alert> alerts;
 
 	private Map<String, Set<String>> errors;
 
+	/**
+	 * Adds an error associated with a field.
+	 */
 	public void error(String key, String msg) {
 		if (errors == null) {
 			errors = new HashMap<>();
@@ -30,6 +37,9 @@ public class Messages {
 		errors.get(key).add(msg);
 	}
 
+	/**
+	 * Adds an Alert (a global message for the user).
+	 */
 	public void alert(Alert alert) {
 		if (alerts == null) {
 			alerts = new ArrayList<>();
@@ -37,11 +47,17 @@ public class Messages {
 		alerts.add(alert);
 	}
 
+	/**
+	 * Adds a 'green' Alert.
+	 */
 	public void alertSuccess(String msg) {
 		alert(new Alert(Alert.Type.SUCCESS, msg));
 	}
 
-	public void allertError(String msg) {
+	/**
+	 * Adds a 'red' Alert.
+	 */
+	public void alertError(String msg) {
 		alert(new Alert(Alert.Type.ERROR, msg));
 	}
 
@@ -52,4 +68,5 @@ public class Messages {
 	public Map<String, Set<String>> getErrors() {
 		return errors;
 	}
+
 }

@@ -8,6 +8,8 @@ import javax.ws.rs.core.Application;
 import java.util.Map;
 
 /**
+ * Main configuration for the notejam application.
+ * Note that the application can't be mapped to / (by now).
  * @author Florian Hirsch
  */
 @ApplicationPath("/r")

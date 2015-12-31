@@ -1,6 +1,7 @@
 package com.github.notejam.ozark;
 
 /**
+ * Encapsulates an alert (a global message for the user).
  * @author Florian Hirsch
  */
 public class Alert {

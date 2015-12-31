@@ -3,4 +3,40 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+  <!--
+    The security constraint for this application.
+    The notes page can be accessed by an authenticated user with a role 'USER'.
+    The JDBCRealm is configured in docker/domain.xml. The roles are mapped in glassfish-web.xml
+  -->
+
+  <security-constraint>
+    <display-name>Notes Pages</display-name>
+    <web-resource-collection>
+      <web-resource-name>notes</web-resource-name>
+      <description>notes for logged in users only</description>
+      <url-pattern>/r/notes/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>USER</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>notejamRealm</realm-name>
+    <form-login-config>
+      <form-login-page>/r/signin</form-login-page>
+      <form-error-page>/r/signin-failed</form-error-page>
+    </form-login-config>
+  </login-config>
+  <security-role>
+    <description>User</description>
+    <role-name>USER</role-name>
+  </security-role>
+  <security-role>
+    <description>Admin</description>
+    <role-name>ADMIN</role-name>
+  </security-role>
+
 </web-app>

@@ -106,6 +106,22 @@
           <property name="jaas-context" value="fileRealm"></property>
         </auth-realm>
         <auth-realm classname="com.sun.enterprise.security.auth.realm.certificate.CertificateRealm" name="certificate"></auth-realm>
+        <!--
+          Configuration for the Notejam JDBCRealm:
+          Defines in which tables user and roles are found.
+        -->
+        <auth-realm name="notejamRealm" classname="com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm">
+          <property name="jaas-context" value="jdbcRealm"></property>
+          <property name="datasource-jndi" value="jdbc/__default"></property>
+          <property name="user-table" value="NOTEJAM_USER"></property>
+          <property name="password-column" value="PASSWORD"></property>
+          <property name="user-name-column" value="EMAIL"></property>
+          <property name="group-table" value="NOTEJAM_GROUP"></property>
+          <property name="group-name-column" value="ROLE"></property>
+          <property name="group-table-user-name-column" value="EMAIL"></property>
+          <property name="digestrealm-password-enc-algorithm" value="SHA-256"></property>
+          <property name="charset" value="UTF-8"></property>
+        </auth-realm>
         <jacc-provider policy-provider="com.sun.enterprise.security.provider.PolicyWrapper" name="default" policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl">
           <property name="repository" value="${com.sun.aas.instanceRoot}/generated/policy"></property>
         </jacc-provider>
@@ -437,36 +453,6 @@
   </secure-admin>
   <clusters></clusters>
   <applications>
-    <application context-root="/test-book-cdi" object-type="user" name="test-book-cdi" location="${com.sun.aas.instanceRootURI}/applications/test-book-cdi/">
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/test-book-cdi/test-book-cdi.war"></property>
-      <property name="archiveType" value="war"></property>
-      <property name="defaultAppName" value="test-book-cdi"></property>
-      <module name="test-book-cdi">
-        <engine sniffer="weld"></engine>
-        <engine sniffer="security"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-    </application>
-    <application context-root="/myartifact" object-type="user" name="myartifact" location="${com.sun.aas.instanceRootURI}/applications/myartifact/">
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/myartifact/myartifact.war"></property>
-      <property name="archiveType" value="war"></property>
-      <property name="defaultAppName" value="myartifact"></property>
-      <module name="myartifact">
-        <engine sniffer="security"></engine>
-        <engine sniffer="web"></engine>
-        <engine sniffer="weld"></engine>
-      </module>
-    </application>
-    <application context-root="/test-application-path" object-type="user" name="test-application-path" location="${com.sun.aas.instanceRootURI}/applications/test-application-path/">
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/test-application-path/test-application-path.war"></property>
-      <property name="archiveType" value="war"></property>
-      <property name="defaultAppName" value="test-application-path"></property>
-      <module name="test-application-path">
-        <engine sniffer="weld"></engine>
-        <engine sniffer="security"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-    </application>
     <application context-root="/notejam-ozark" object-type="user" name="notejam-ozark" location="${com.sun.aas.instanceRootURI}/applications/notejam-ozark/">
       <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/notejam-ozark/notejam-ozark.war"></property>
       <property name="archiveType" value="war"></property>

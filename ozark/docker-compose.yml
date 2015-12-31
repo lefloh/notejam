@@ -4,12 +4,14 @@ server:
   ports:
     - "4848:4848"
     - "8080:8080"
+    - "9009:9009"
+    # DerbyDB
+    - "1527:1527"
   volumes_from:
     - app
-  command: asadmin start-domain -v
 app:
   image: glassfish/nightly
   container_name: notejam_app
   volumes:
     - ./notejam/target/notejam-ozark.war:/glassfish4/glassfish/domains/domain1/autodeploy/notejam-ozark.war
-  command: /bin/bash
+  command: "tail -f /dev/null"

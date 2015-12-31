@@ -1,18 +1,29 @@
 package com.github.notejam.ozark.user;
 
 import com.google.common.base.MoreObjects;
+import org.hibernate.validator.constraints.ScriptAssert;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.ws.rs.FormParam;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Represents the data of the signup form.
+ * The properties are validated by BeanValidation. As BeanValidation
+ * does not support cross field validation out ot the box we simply add
+ * a ScriptAssert to validate if the confirmed password matches the original one.
+ * Note that this validation is not associated with a field and will be displayed as Alert.
  * @author Florian Hirsch
- * // TODO check password == confirm
  */
-public class AccountSettingsForm {
+@ScriptAssert(lang = "javascript",
+		script = "_this.password.equals(_this.confirmPassword)",
+		message = "Password does not match the confirmation")
+public class AccountSettingsForm implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@NotNull(message = "Please enter your email.")
 	@Pattern(regexp = "\\S+@\\S+\\.\\S+", message = "Please enter a valid email.")
@@ -25,7 +36,6 @@ public class AccountSettingsForm {
 	private String password;
 
 	@NotNull(message = "Please confirm your password")
-	@Size(min = 6, message = "Please enter at least 6 Characters")
 	@FormParam("confirmPassword")
 	private String confirmPassword;
 

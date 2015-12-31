@@ -9,20 +9,21 @@
     <form class="offset-by-six sign-in" action="${mvc.contextPath}/r/signup" method="POST">
 
       <label for="email">Email</label>
-      <input type="text" id="email" name="email">
+      <input type="text" id="email" name="email" value="${account.email}">
       <t:error field="email" />
 
       <label for="password">Password</label>
-      <input type="password" id="password" name="password">
+      <input type="password" id="password" name="password" value="${account.password}">
       <t:error field="password" />
 
       <label for="confirmPassword">Confirm password</label>
-      <input type="password" id="confirmPassword" name="confirmPassword">
+      <input type="password" id="confirmPassword" name="confirmPassword" value="${account.confirmPassword}">
       <t:error field="confirmPassword" />
 
       <input type="submit" value="Sign Up"> or
       <a href="${mvc.contextPath}/r/signin">Sign in</a>
 
     </form>
+
   </jsp:body>
 </t:mainpage>
